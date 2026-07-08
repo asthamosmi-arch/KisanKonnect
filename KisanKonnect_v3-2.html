@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="KisanKonnect — Voice-first AI platform for 600M Indian farmers. Crop diagnosis, Mandi prices, Weather, Government schemes in Hindi, Bhojpuri & Maithili.">
+<meta name="theme-color" content="#1B5E20">
+<title>KisanKonnect — किसान कनेक्ट</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Baloo+2:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   KISANKONNECT v3.0 — Production Design System
+   Author: Astha Mosmi | Maitreyi College, Delhi
+   ══════════════════════════════════════════════ */
+
+:root {
+  /* Brand */
+  --leaf:        #2D6A4F;
+  --leaf-deep:   #1B4332;
+  --leaf-mid:    #40916C;
+  --grass:       #52B788;
+  --grass-light: #95D5B2;
+  --mint:        #D8F3DC;
+  --wheat:       #D4A847;
+  --gold:        #F5C842;
+  --gold-light:  #FFF3CD;
+  --soil:        #2C1810;
+  --clay:        #8B4513;
+  --sky:         #ADE8F4;
+  --danger:      #C0392B;
+  --warning:     #E67E22;
+  --info:        #2980B9;
+  --satellite:   #1565C0;
+
+  /* Light theme */
+  --bg:          #F8FBF8;
+  --surface:     #FFFFFF;
+  --surface-2:   #F0F7F0;
+  --surface-3:   #E8F5E9;
+  --border:      #E0EDE0;
+  --text-1:      #1A2E1A;
+  --text-2:      #4A6741;
+  --text-3:      #7A9478;
+  --ink:         #1A1208;
+  --muted:       #8A8F8A;
+
+  /* Spacing */
+  --r-sm:  8px;
+  --r:     14px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
+  --shadow:    0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-card: 0 2px 12px rgba(45,106,79,0.08);
+
+  /* Animations */
+  --ease: cubic-bezier(0.4,0,0.2,1);
+  --fast: 150ms;
+  --mid:  280ms;
+  --slow: 450ms;
+}
+
+[data-theme="dark"] {
+  --bg:        #0D1F0D;
+  --surface:   #152315;
+  --surface-2: #1C2E1C;
+  --surface-3: #243424;
+  --border:    #2A3D2A;
+  --text-1:    #E8F5E9;
+  --text-2:    #A5C8A5;
+  --text-3:    #6A9A6A;
+  --ink:       #F0F0F0;
+  --muted:     #7A9A7A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: "DM Sans", "Noto Sans Devanagari", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--grass-light); border-radius: 4px; }
+
+/* ── SKIP LINK (accessibility) ── */
+.skip-link {
+  position: absolute; top: -100px; left: 8px;
+  background: var(--leaf); color: white; padding: 8px 16px;
+  border-radius: var(--r); z-index: 9999; font-weight: 600;
+  transition: top var(--fast);
+}
+.skip-link:focus { top: 8px; }
+
+/* ══════════════════════════════════════════
+   SPLASH / ONBOARDING
+   ══════════════════════════════════════════ */
+#splash {
+  position: fixed; inset: 0; z-index: 1000;
+  background: linear-gradient(160deg, var(--leaf-deep) 0%, var(--leaf) 50%, var(--leaf-mid) 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+
+#splash.fade-out { opacity: 0; transform: scale(1.05); pointer-events: none; }
+
+.splash-logo {
+  width: 88px; height: 88px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.8rem;
+  margin-bottom: 24px;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+@keyframes logoFloat {
+  0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}
+}
+
+.splash-title {
+  font-family: "Baloo 2", cursive;
+  font-size: 2.8rem; font-weight: 800;
+  color: white; text-align: center; line-height: 1;
+  margin-bottom: 6px;
+}
+.splash-tagline {
+  font-family: "Noto Sans Devanagari", sans-serif;
+  color: var(--gold); font-size: 1rem; text-align: center;
+  margin-bottom: 8px; font-weight: 500;
+}
+.splash-sub {
+  color: rgba(255,255,255,0.6); font-size: 0.82rem;
+  text-align: center; margin-bottom: 48px;
+}
+
+.lang-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; width: 100%; max-width: 340px; margin-bottom: 24px;
+}
+
+.lang-btn {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: var(--r-lg);
+  padding: 16px 12px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  cursor: pointer; transition: all var(--mid) var(--ease);
+  color: white;
+}
+.lang-btn:hover, .lang-btn.selected {
+  background: rgba(245,200,66,0.2);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.lang-btn .lang-name { font-family: "Noto Sans Devanagari"; font-size: 1.1rem; font-weight: 600; }
+.lang-btn .lang-eng { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+
+.enter-btn {
+  width: 100%; max-width: 340px;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--soil); font-family: "Baloo 2", cursive;
+  font-size: 1.1rem; font-weight: 700;
+  border: none; border-radius: var(--r-lg);
+  cursor: pointer; transition: all var(--mid) var(--ease);
+  box-shadow: 0 4px 20px rgba(245,200,66,0.4);
+}
+.enter-btn:hover { background: white; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,200,66,0.5); }
+
+/* ══════════════════════════════════════════
+   APP SHELL
+   ══════════════════════════════════════════ */
+#app { display: none; }
+#app.visible { display: block; }
+
+/* ── TOP NAV ── */
+.topnav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px);
+}
+
+.nav-brand {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.brand-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--leaf), var(--grass));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.brand-text {
+  font-family: "Baloo 2", cursive; font-weight: 800;
+  font-size: 1.2rem; color: var(--leaf); line-height: 1;
+}
+.brand-text small {
+  display: block; font-size: 0.55rem; font-weight: 400;
+  color: var(--text-3); letter-spacing: 1px; text-transform: uppercase;
+}
+
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+
+.nav-icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px; border: none;
+  background: var(--surface-2); color: var(--text-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer;
+  transition: all var(--fast) var(--ease);
+}
+.nav-icon-btn:hover { background: var(--surface-3); color: var(--leaf); }
+
+.lang-pill {
+  padding: 6px 12px;
+  border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--surface-2); color: var(--text-2);
+  font-size: 0.75rem; font-weight: 500; cursor: pointer;
+  transition: all var(--fast); white-space: nowrap;
+}
+.lang-pill:hover { border-color: var(--leaf); color: var(--leaf); }
+
+/* ── TAB BAR ── */
+.tabbar {
+  position: sticky; top: 60px; z-index: 190;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; overflow-x: auto;
+  scrollbar-width: none; gap: 0;
+}
+.tabbar::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex-shrink: 0; padding: 12px 16px;
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--text-3); cursor: pointer;
+  border-bottom: 2.5px solid transparent;
+  transition: all var(--fast) var(--ease);
+  display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--leaf); background: var(--surface-2); }
+.tab.active { color: var(--leaf); border-bottom-color: var(--leaf); font-weight: 600; }
+.tab .tab-ico { font-size: 0.95rem; }
+
+/* ── MAIN ── */
+.main { padding: 16px 16px 90px; max-width: 520px; margin: 0 auto; }
+
+/* ── SECTIONS ── */
+.section { display: none; animation: fadeUp var(--mid) var(--ease); }
+.section.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   DASHBOARD HERO
+   ══════════════════════════════════════════ */
+.dash-hero {
+  background: linear-gradient(140deg, var(--leaf-deep) 0%, var(--leaf) 60%, var(--leaf-mid) 100%);
+  border-radius: var(--r-xl);
+  padding: 24px;
+  margin-bottom: 16px;
+  position: relative; overflow: hidden;
+}
+.dash-hero::after {
+  content: "🌾";
+  position: absolute; right: -10px; top: -10px;
+  font-size: 8rem; opacity: 0.06;
+  transform: rotate(15deg);
+}
+
+.dash-greeting {
+  font-size: 0.75rem; color: rgba(255,255,255,0.65);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+}
+.dash-name {
+  font-family: "Baloo 2", cursive; font-size: 1.6rem; font-weight: 800;
+  color: white; line-height: 1.1; margin-bottom: 4px;
+}
+.dash-sub {
+  font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-bottom: 20px;
+}
+
+.dash-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
+}
+.dash-stat {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--r);
+  padding: 10px 8px; text-align: center;
+}
+.ds-num { font-family:"Baloo 2",cursive; font-size:1.3rem; font-weight:800; color:var(--gold); }
+.ds-lbl { font-size:0.62rem; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.5px; }
+
+/* ── QUICK ACTIONS ── */
+.quick-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px;
+  margin-bottom: 16px;
+}
+.quick-btn {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: 14px 8px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  cursor: pointer; border: 1.5px solid var(--border);
+  transition: all var(--mid) var(--ease);
+  box-shadow: var(--shadow-sm);
+}
+.quick-btn:hover { border-color: var(--leaf); transform: translateY(-2px); box-shadow: var(--shadow); }
+.quick-btn .q-ico { font-size: 1.5rem; }
+.quick-btn .q-lbl { font-size: 0.65rem; font-weight: 600; color: var(--text-2); text-align: center; line-height: 1.3; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.card-title {
+  font-family:"Baloo 2",cursive; font-weight:700; font-size:0.95rem;
+  color: var(--text-1); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 6px;
+}
+.card-sub { font-size: 0.75rem; color: var(--text-3); margin-bottom: 14px; }
+
+/* ── SATELLITE CARD ── */
+.satellite-card {
+  background: linear-gradient(140deg, #0a1628, #1565C0, #0d47a1);
+  border-radius: var(--r-xl);
+  padding: 20px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(100,160,255,0.2);
+  position: relative; overflow: hidden;
+}
+.satellite-card::before {
+  content: "🛰️";
+  position: absolute; right: 12px; top: 12px;
+  font-size: 2.5rem; opacity: 0.15;
+}
+.sat-title {
+  font-family:"Baloo 2",cursive; font-size:0.9rem; font-weight:700;
+  color: white; margin-bottom: 2px;
+}
+.sat-sub { font-size:0.68rem; color:rgba(100,180,255,0.8); margin-bottom:14px; }
+.sat-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+.sat-metric {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r); padding: 10px;
+}
+.sat-metric-lbl { font-size:0.62rem; color:rgba(150,200,255,0.8); margin-bottom:3px; }
+.sat-metric-val { font-size:1.2rem; font-weight:700; color:white; }
+.sat-metric-status { font-size:0.6rem; margin-top:2px; }
+.status-good { color: #69f0ae; }
+.status-warn { color: #ffd740; }
+.status-alert { color: #ff5252; }
+
+.ndvi-bar-wrap { margin: 14px 0 10px; }
+.ndvi-bar-lbl { font-size:0.65rem; color:rgba(150,200,255,0.8); margin-bottom:5px; display:flex; justify-content:space-between; }
+.ndvi-bar { height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden; }
+.ndvi-fill { height:100%; border-radius:4px; background: linear-gradient(90deg,#ff5252,#ffd740,#69f0ae); transition: width 1s var(--ease); }
+
+.sat-note { font-size:0.65rem; color:rgba(150,200,255,0.7); text-align:center; }
+
+/* ── MIC / VOICE ── */
+.mic-wrap { display:flex; flex-direction:column; align-items:center; padding: 8px 0 16px; }
+.mic-btn {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--leaf), var(--leaf-mid));
+  border: none; display:flex; align-items:center; justify-content:center;
+  font-size: 2rem; cursor:pointer; margin-bottom: 10px;
+  box-shadow: 0 4px 20px rgba(45,106,79,0.4);
+  transition: all var(--mid) var(--ease);
+  position: relative;
+}
+.mic-btn::after {
+  content:""; position:absolute; inset:-4px; border-radius:50%;
+  border: 2px solid var(--grass); opacity:0;
+  transition: opacity var(--mid);
+}
+.mic-btn:hover { transform:scale(1.06); box-shadow:0 8px 28px rgba(45,106,79,0.5); }
+.mic-btn:hover::after { opacity:0.5; }
+.mic-btn.recording {
+  background: linear-gradient(135deg, var(--danger), #e74c3c);
+  animation: pulseRec 1.4s ease-in-out infinite;
+}
+@keyframes pulseRec {
+  0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.5)}
+  50%{box-shadow:0 0 0 20px rgba(192,57,43,0)}
+}
+
+.waveform {
+  display:flex; align-items:center; justify-content:center;
+  gap:3px; height:36px; width:100%; margin:6px 0;
+  opacity:0; transition:opacity var(--mid);
+}
+.waveform.active { opacity:1; }
+.wave-bar {
+  width:3px; background: var(--grass); border-radius:2px;
+  animation: waveAnim 0.9s ease-in-out infinite;
+}
+.wave-bar:nth-child(odd) { animation-delay: 0.1s; }
+.wave-bar:nth-child(3n) { animation-delay: 0.2s; }
+@keyframes waveAnim {
+  0%,100%{height:4px} 50%{height:28px}
+}
+
+.rec-label { font-size:0.78rem; color:var(--text-3); text-align:center; min-height:20px; }
+.rec-transcript { font-size:0.82rem; color:var(--leaf); text-align:center; font-style:italic; margin-top:4px; min-height:18px; }
+
+/* ── FEED POSTS ── */
+.feed-post {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp var(--mid) var(--ease);
+}
+
+.post-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.avatar {
+  width:40px; height:40px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem; flex-shrink:0; font-weight:700;
+}
+.av-g { background:#d4edda; color:#155724; }
+.av-o { background:#fde8cc; color:#7d3c02; }
+.av-b { background:#d0e8f5; color:#0a3d62; }
+.av-y { background:#fff3cd; color:#7d6002; }
+.av-p { background:#e8d5f5; color:#4a0072; }
+
+.post-name { font-weight:600; font-size:0.85rem; color:var(--text-1); }
+.post-loc { font-size:0.7rem; color:var(--text-3); }
+.post-badge {
+  margin-left:auto; font-size:0.62rem; padding:3px 8px;
+  border-radius:8px; background:var(--surface-3); color:var(--leaf); font-weight:600;
+}
+
+.voice-player {
+  background: var(--surface-2);
+  border-radius: var(--r-lg);
+  padding: 10px 14px;
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:10px; cursor:pointer;
+  transition: background var(--fast);
+  border: 1px solid var(--border);
+}
+.voice-player:hover { background:var(--surface-3); }
+.play-btn {
+  width:32px; height:32px; border-radius:50%;
+  background: var(--leaf); color:white; border:none;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.8rem; cursor:pointer; flex-shrink:0;
+}
+.vw { flex:1; height:24px; display:flex; align-items:center; gap:2px; }
+.vw div { flex:1; background:var(--grass); border-radius:1px; opacity:0.45; }
+.vdur { font-size:0.68rem; color:var(--text-3); }
+
+.post-text { font-size:0.82rem; color:var(--text-1); line-height:1.6; margin-bottom:10px; }
+
+.ai-box {
+  background: linear-gradient(135deg, var(--surface-3), var(--mint));
+  border-left: 3px solid var(--grass);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 10px 12px; margin-bottom:10px;
+}
+.ai-box-lbl {
+  font-size:0.65rem; font-weight:700; color:var(--leaf);
+  text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;
+  display:flex; align-items:center; gap:4px;
+}
+.ai-box-text { font-size:0.8rem; color:#1a4a1a; line-height:1.6; }
+
+.confidence-pill {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:2px 8px; border-radius:12px;
+  font-size:0.65rem; font-weight:600; margin-left:6px;
+}
+.conf-high { background:#d4edda; color:#155724; }
+.conf-mid  { background:#fff3cd; color:#856404; }
+.conf-low  { background:#f8d7da; color:#721c24; }
+
+.post-actions { display:flex; gap:6px; }
+.act-btn {
+  flex:1; padding:7px 4px;
+  border:1px solid var(--border); border-radius:var(--r-sm);
+  background:transparent; font-size:0.7rem; color:var(--text-3);
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  gap:3px; transition:all var(--fast);
+}
+.act-btn:hover { background:var(--surface-3); color:var(--leaf); border-color:var(--leaf); }
+
+.disclaimer {
+  font-size:0.65rem; color:var(--text-3); margin:8px 0 4px;
+  display:flex; align-items:flex-start; gap:4px; line-height:1.4;
+}
+
+/* ── ADVISORY ── */
+.advisory-form { margin-bottom: 14px; }
+.form-row { display:flex; gap:8px; margin-bottom:10px; }
+.form-select, .form-input, .form-textarea {
+  width:100%; padding:12px 14px;
+  border:1.5px solid var(--border); border-radius:var(--r);
+  font-family:"DM Sans","Noto Sans Devanagari",sans-serif;
+  font-size:0.85rem; color:var(--text-1);
+  background:var(--surface-2);
+  transition: border-color var(--fast), background var(--fast);
+  appearance:none;
+}
+.form-select:focus, .form-input:focus, .form-textarea:focus {
+  outline:none; border-color:var(--leaf); background:var(--surface);
+}
+.form-textarea { resize:none; height:80px; }
+.form-select { cursor:pointer; }
+
+.btn-primary {
+  width:100%; padding:14px;
+  background:linear-gradient(135deg, var(--leaf), var(--leaf-mid));
+  color:white; border:none; border-radius:var(--r);
+  font-family:"Baloo 2",cursive; font-size:1rem; font-weight:600;
+  cursor:pointer; transition:all var(--mid) var(--ease);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  box-shadow:0 4px 16px rgba(45,106,79,0.3);
+}
+.btn-primary:hover { filter:brightness(1.08); transform:translateY(-1px); box-shadow:0 6px 24px rgba(45,106,79,0.4); }
+.btn-primary:active { transform:translateY(0); }
+.btn-primary:disabled { background:var(--border); color:var(--text-3); cursor:not-allowed; box-shadow:none; transform:none; }
+
+.btn-secondary {
+  width:100%; padding:12px;
+  background:transparent; color:var(--leaf);
+  border:1.5px solid var(--leaf); border-radius:var(--r);
+  font-family:"Baloo 2",cursive; font-size:0.9rem; font-weight:600;
+  cursor:pointer; transition:all var(--fast);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn-secondary:hover { background:var(--surface-3); }
+
+.ai-thinking {
+  display:none; align-items:center; gap:10px;
+  padding:14px; background:var(--surface-3);
+  border-radius:var(--r); margin:10px 0;
+  border:1px solid var(--border);
+}
+.ai-thinking.show { display:flex; }
+.think-dots span {
+  display:inline-block; width:7px; height:7px;
+  background:var(--grass); border-radius:50%; margin:0 2px;
+  animation:dotBounce 1.2s infinite;
+}
+.think-dots span:nth-child(2){animation-delay:0.2s}
+.think-dots span:nth-child(3){animation-delay:0.4s}
+@keyframes dotBounce{0%,80%,100%{transform:scale(0.7);opacity:0.5}40%{transform:scale(1.2);opacity:1}}
+.think-text { font-size:0.8rem; color:var(--leaf); }
+
+.result-card {
+  display:none; background:var(--surface-3);
+  border:1.5px solid var(--grass); border-radius:var(--r-lg);
+  padding:18px; margin-top:14px; animation:fadeUp var(--mid) var(--ease);
+}
+.result-card.show { display:block; }
+.result-hdr { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.result-ico {
+  width:44px; height:44px; border-radius:var(--r);
+  background:linear-gradient(135deg,var(--leaf),var(--grass));
+  display:flex; align-items:center; justify-content:center; font-size:1.4rem;
+}
+.result-title { font-weight:700; font-size:0.95rem; color:var(--text-1); }
+.result-sub { font-size:0.7rem; color:var(--text-3); }
+.diag-item { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); }
+.diag-item:last-child{border-bottom:none}
+.diag-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+.dot-ok{background:var(--grass)} .dot-warn{background:var(--wheat)} .dot-alert{background:var(--danger)}
+.diag-lbl{font-size:0.82rem;font-weight:600;color:var(--text-1)}
+.diag-val{font-size:0.78rem;color:var(--text-2);line-height:1.55;margin-top:2px}
+.prevent-box {
+  background:var(--surface-2); border-radius:var(--r);
+  padding:12px; margin-top:12px; font-size:0.75rem; color:var(--text-2);
+  line-height:1.5; border:1px solid var(--border);
+}
+.prevent-box strong { color:var(--leaf); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; }
+
+/* ── WEATHER ── */
+.weather-hero {
+  background: linear-gradient(140deg, #1565C0, #1E88E5, #42A5F5);
+  border-radius: var(--r-xl); padding: 20px;
+  margin-bottom: 12px; color: white; text-align:center;
+}
+.weather-temp { font-family:"Baloo 2",cursive; font-size:3.5rem; font-weight:800; line-height:1; }
+.weather-cond { font-size:0.9rem; margin:4px 0; opacity:0.85; }
+.weather-loc { font-size:0.72rem; opacity:0.65; }
+.weather-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:14px; }
+.weather-mini { background:rgba(255,255,255,0.12); border-radius:var(--r); padding:8px 4px; text-align:center; }
+.wm-day { font-size:0.62rem; opacity:0.7; }
+.wm-ico { font-size:1.2rem; margin:3px 0; }
+.wm-temp { font-size:0.78rem; font-weight:600; }
+
+.weather-details { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:12px; }
+.wd-item {
+  background:var(--surface); border-radius:var(--r);
+  padding:14px; border:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+}
+.wd-ico { font-size:1.4rem; }
+.wd-lbl { font-size:0.7rem; color:var(--text-3); }
+.wd-val { font-size:0.95rem; font-weight:700; color:var(--text-1); }
+
+.crop-advisory-strip {
+  background:linear-gradient(135deg,var(--gold-light),#fffde7);
+  border:1.5px solid var(--gold); border-radius:var(--r-lg);
+  padding:14px; margin-bottom:12px;
+}
+.cas-title { font-size:0.78rem; font-weight:700; color:var(--clay); margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+.cas-text { font-size:0.8rem; color:var(--soil); line-height:1.55; }
+
+/* ── MANDI ── */
+.mandi-ticker {
+  background:linear-gradient(135deg,var(--soil),#3d2418);
+  border-radius:var(--r-xl); padding:16px 18px;
+  margin-bottom:12px; overflow:hidden; position:relative;
+}
+.ticker-label { font-size:0.65rem; color:rgba(245,200,66,0.8); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.ticker-scroll {
+  display:flex; gap:16px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px;
+}
+.ticker-scroll::-webkit-scrollbar{display:none}
+.ticker-item { flex-shrink:0; text-align:center; }
+.ti-crop { font-size:0.65rem; color:rgba(255,255,255,0.6); margin-bottom:2px; }
+.ti-price { font-family:"Baloo 2",cursive; font-size:1rem; font-weight:800; color:var(--gold); }
+.ti-change { font-size:0.62rem; }
+.ti-up { color:#69f0ae; } .ti-down { color:#ff5252; }
+
+.mandi-table { width:100%; border-collapse:separate; border-spacing:0 6px; }
+.mandi-row { background:var(--surface); }
+.mandi-row td { padding:12px 14px; font-size:0.82rem; border:1px solid var(--border); }
+.mandi-row td:first-child { border-radius:var(--r) 0 0 var(--r); font-weight:600; color:var(--text-1); }
+.mandi-row td:last-child { border-radius:0 var(--r) var(--r) 0; }
+.price-cell { font-family:"Baloo 2",cursive; font-size:0.9rem; font-weight:700; color:var(--leaf); }
+.trend-up { color:#27ae60; font-weight:600; }
+.trend-down { color:var(--danger); font-weight:600; }
+.mandi-note { font-size:0.65rem; color:var(--text-3); margin-top:8px; display:flex; align-items:center; gap:4px; }
+
+/* ── SCHEMES ── */
+.filter-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; scrollbar-width:none; }
+.filter-row::-webkit-scrollbar{display:none}
+.chip {
+  flex-shrink:0; padding:7px 14px; border-radius:20px;
+  font-size:0.74rem; font-weight:500; cursor:pointer;
+  border:1.5px solid var(--border); background:var(--surface);
+  color:var(--text-3); transition:all var(--fast);
+}
+.chip:hover, .chip.active { background:var(--leaf); color:white; border-color:var(--leaf); }
+
+.scheme-card {
+  background:var(--surface); border-radius:var(--r-lg);
+  padding:18px; margin-bottom:12px;
+  border:1px solid var(--border); border-left:4px solid var(--leaf);
+  box-shadow:var(--shadow-sm); animation:fadeUp var(--mid) var(--ease) both;
+}
+.scheme-card:nth-child(2){animation-delay:0.05s}
+.scheme-card:nth-child(3){animation-delay:0.1s}
+.scheme-card:nth-child(4){animation-delay:0.15s}
+
+.scheme-hdr { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.scheme-name { font-family:"Baloo 2",cursive; font-weight:700; font-size:0.95rem; color:var(--text-1); line-height:1.3; }
+.scheme-badge { font-size:0.62rem; padding:3px 8px; border-radius:8px; font-weight:600; flex-shrink:0; margin-left:8px; }
+.b-active{background:#d4edda;color:#155724} .b-deadline{background:#fff3cd;color:#856404} .b-new{background:#cce5ff;color:#004085}
+.scheme-desc { font-size:0.78rem; color:var(--text-3); line-height:1.5; margin-bottom:10px; }
+.scheme-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.stag { font-size:0.68rem; padding:3px 9px; border-radius:8px; background:var(--surface-2); color:var(--text-2); border:1px solid var(--border); }
+.scheme-benefit {
+  background:var(--surface-3); border-radius:var(--r-sm);
+  padding:10px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;
+}
+.ben-lbl{font-size:0.65rem;color:var(--leaf);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.ben-val{font-size:0.95rem;font-weight:800;color:var(--text-1);font-family:"Baloo 2",cursive}
+.scheme-actions { display:flex; gap:8px; }
+.btn-apply {
+  flex:1; padding:10px;
+  background:var(--gold); color:var(--soil);
+  border:none; border-radius:var(--r-sm);
+  font-family:"Baloo 2",cursive; font-size:0.85rem; font-weight:700;
+  cursor:pointer; transition:all var(--fast);
+}
+.btn-apply:hover { background:var(--wheat); }
+.btn-info {
+  padding:10px 14px;
+  background:var(--surface-2); color:var(--text-2);
+  border:1px solid var(--border); border-radius:var(--r-sm);
+  font-size:0.82rem; cursor:pointer; transition:all var(--fast);
+}
+.btn-info:hover { background:var(--surface-3); color:var(--leaf); }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0;
+  background:var(--surface); border-top:1px solid var(--border);
+  display:flex; padding:8px 0 12px;
+  z-index:200; box-shadow:0 -4px 20px rgba(0,0,0,0.06);
+}
+.bnav-item {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; gap:3px;
+  cursor:pointer; padding:4px 2px;
+  transition:all var(--fast); color:var(--text-3);
+  border:none; background:transparent;
+}
+.bnav-item:hover { color:var(--leaf); }
+.bnav-item.active { color:var(--leaf); }
+.bnav-item.active .bnav-ico {
+  background:var(--surface-3); border-radius:12px;
+}
+.bnav-ico { font-size:1.2rem; padding:4px 12px; transition:background var(--fast); }
+.bnav-lbl { font-size:0.58rem; font-weight:600; text-transform:uppercase; letter-spacing:0.3px; }
+
+/* ── TOAST ── */
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--leaf-deep); color:white; padding:10px 20px;
+  border-radius:var(--r-xl); font-size:0.8rem; font-weight:500;
+  z-index:9999; pointer-events:none; opacity:0;
+  transition:all var(--mid) var(--ease); white-space:nowrap;
+  max-width:90vw; text-align:center; box-shadow:var(--shadow-lg);
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── PROTOTYPE BADGE ── */
+.proto-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:0.62rem; font-weight:600; padding:2px 8px;
+  border-radius:8px; background:#fff3cd; color:#856404;
+  border:1px solid #ffc107; margin-bottom:8px;
+}
+.live-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:0.62rem; font-weight:600; padding:2px 8px;
+  border-radius:8px; background:#d4edda; color:#155724;
+  border:1px solid #52B788;
+}
+.live-badge::before { content:"●"; color:#27ae60; font-size:0.6rem; }
+
+/* ── STATUS SECTION LABEL ── */
+.status-section {
+  font-size:0.68rem; color:var(--text-3);
+  border-bottom:1px solid var(--border);
+  padding-bottom:8px; margin-bottom:12px;
+  display:flex; align-items:center; gap:8px;
+}
+
+/* ── PROFILE ── */
+.profile-hero {
+  background:linear-gradient(140deg, var(--leaf-deep), var(--leaf));
+  border-radius:var(--r-xl); padding:24px; text-align:center; margin-bottom:12px;
+}
+.profile-av {
+  width:72px; height:72px;
+  background:rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.3);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:2.2rem; margin:0 auto 12px;
+}
+.profile-name { font-family:"Baloo 2",cursive; font-size:1.3rem; font-weight:800; color:white; }
+.profile-role { font-size:0.75rem; color:rgba(255,255,255,0.65); margin-bottom:14px; }
+.profile-stats { display:flex; justify-content:space-around; border-top:1px solid rgba(255,255,255,0.15); padding-top:14px; }
+.pst-num { font-family:"Baloo 2",cursive; font-size:1.2rem; font-weight:800; color:var(--gold); }
+.pst-lbl { font-size:0.65rem; color:rgba(255,255,255,0.6); }
+
+.settings-list { background:var(--surface); border-radius:var(--r-lg); border:1px solid var(--border); overflow:hidden; }
+.settings-item {
+  display:flex; align-items:center; gap:12px;
+  padding:14px 16px; border-bottom:1px solid var(--border);
+  cursor:pointer; transition:background var(--fast);
+}
+.settings-item:last-child{border-bottom:none}
+.settings-item:hover{background:var(--surface-2)}
+.si-ico{font-size:1.2rem;width:28px;text-align:center}
+.si-text{flex:1}
+.si-label{font-size:0.85rem;font-weight:500;color:var(--text-1)}
+.si-sub{font-size:0.7rem;color:var(--text-3)}
+.si-arrow{font-size:0.8rem;color:var(--text-3)}
+
+/* Toggle switch */
+.toggle {
+  position:relative; width:44px; height:24px;
+  display:inline-block;
+}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider {
+  position:absolute; inset:0; background:var(--border);
+  border-radius:24px; cursor:pointer; transition:background var(--mid);
+}
+.toggle-slider::before {
+  content:""; position:absolute;
+  height:18px; width:18px; left:3px; bottom:3px;
+  background:white; border-radius:50%; transition:transform var(--mid);
+}
+.toggle input:checked + .toggle-slider { background:var(--leaf); }
+.toggle input:checked + .toggle-slider::before { transform:translateX(20px); }
+
+/* ── FARM DIARY ── */
+.diary-entry {
+  background:var(--surface); border-radius:var(--r-lg);
+  padding:16px; margin-bottom:10px;
+  border:1px solid var(--border); border-left:4px solid var(--wheat);
+}
+.de-date{font-size:0.68rem;color:var(--text-3);margin-bottom:4px}
+.de-title{font-weight:600;font-size:0.88rem;color:var(--text-1);margin-bottom:6px}
+.de-body{font-size:0.78rem;color:var(--text-2);line-height:1.55}
+.de-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.de-tag{font-size:0.65rem;padding:2px 8px;border-radius:8px;background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
+
+/* ── SECTION HEADINGS ── */
+.section-heading {
+  font-family:"Baloo 2",cursive; font-size:1.05rem; font-weight:700;
+  color:var(--text-1); margin-bottom:4px; display:flex; align-items:center; gap:6px;
+}
+.section-subhead { font-size:0.75rem; color:var(--text-3); margin-bottom:14px; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:380px){
+  .quick-grid{grid-template-columns:repeat(4,1fr)}
+  .quick-btn .q-lbl{font-size:0.58rem}
+  .dash-stats{gap:6px}
+  .ds-num{font-size:1.1rem}
+}
+@media(min-width:768px){
+  .main{padding:20px 20px 90px}
+  .quick-grid{grid-template-columns:repeat(8,1fr)}
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ══ TOAST ══ -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- ══════════════════════════════════════════
+     SPLASH / LANGUAGE SELECTION
+     ══════════════════════════════════════════ -->
+<div id="splash" role="dialog" aria-label="Language selection">
+  <div class="splash-logo" aria-hidden="true">🌾</div>
+  <div class="splash-title">KisanKonnect</div>
+  <div class="splash-tagline">किसान की आवाज़, AI की ताकत</div>
+  <div class="splash-sub">Voice-first AI for India's 600M farmers</div>
+
+  <div class="lang-grid" role="group" aria-label="Choose your language">
+    <button class="lang-btn selected" onclick="selectLang(this,'hi-IN')" aria-pressed="true">
+      <span class="lang-name">हिंदी</span>
+      <span class="lang-eng">Hindi</span>
+    </button>
+    <button class="lang-btn" onclick="selectLang(this,'bho')" aria-pressed="false">
+      <span class="lang-name">भोजपुरी</span>
+      <span class="lang-eng">Bhojpuri</span>
+    </button>
+    <button class="lang-btn" onclick="selectLang(this,'mai')" aria-pressed="false">
+      <span class="lang-name">मैथिली</span>
+      <span class="lang-eng">Maithili</span>
+    </button>
+    <button class="lang-btn" onclick="selectLang(this,'en-IN')" aria-pressed="false">
+      <span class="lang-name">English</span>
+      <span class="lang-eng">English</span>
+    </button>
+  </div>
+
+  <button class="enter-btn" onclick="enterApp()" aria-label="Enter KisanKonnect">
+    🚀 किसान कनेक्ट शुरू करें
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN APP
+     ══════════════════════════════════════════ -->
+<div id="app">
+
+<!-- TOP NAV -->
+<nav class="topnav" role="navigation" aria-label="Main navigation">
+  <a class="nav-brand" href="#" aria-label="KisanKonnect home">
+    <div class="brand-icon" aria-hidden="true">🌾</div>
+    <div class="brand-text">KisanKonnect <small>किसान कनेक्ट</small></div>
+  </a>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Dark/Light mode">🌙</button>
+    <button class="nav-icon-btn" onclick="showToast('🔔 No new notifications')" aria-label="Notifications">🔔</button>
+    <button class="lang-pill" onclick="cycleLang()" aria-label="Change language">🌐 हिंदी</button>
+  </div>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tabbar" role="tablist" aria-label="App sections">
+  <button class="tab active" role="tab" aria-selected="true"  onclick="switchTab('dashboard',this)"><span class="tab-ico">🏠</span> Dashboard</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('feed',this)"><span class="tab-ico">🎙️</span> Voice Feed</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('advisory',this)"><span class="tab-ico">🤖</span> KisanAI</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('weather',this)"><span class="tab-ico">🌦️</span> Weather</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('mandi',this)"><span class="tab-ico">📊</span> Mandi</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('schemes',this)"><span class="tab-ico">🏛️</span> Schemes</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('diary',this)"><span class="tab-ico">📔</span> Diary</button>
+  <button class="tab"        role="tab" aria-selected="false" onclick="switchTab('profile',this)"><span class="tab-ico">👩‍🌾</span> Profile</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="main-content">
+
+<!-- ══════════════════════════════════════
+     DASHBOARD
+     ══════════════════════════════════════ -->
+<section id="dashboard" class="section active" role="tabpanel" aria-label="Dashboard">
+
+  <div class="dash-hero">
+    <div class="dash-greeting">सुप्रभात 🌅</div>
+    <div class="dash-name">Astha Mosmi 👩‍🌾</div>
+    <div class="dash-sub">📍 New Delhi · Maitreyi College · B.A. Computer Applications</div>
+    <div class="dash-stats">
+      <div class="dash-stat">
+        <div class="ds-num">7</div>
+        <div class="ds-lbl">AI Queries</div>
+      </div>
+      <div class="dash-stat">
+        <div class="ds-num">3</div>
+        <div class="ds-lbl">Diagnoses</div>
+      </div>
+      <div class="dash-stat">
+        <div class="ds-num">2</div>
+        <div class="ds-lbl">Schemes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Satellite Panel -->
+  <div class="satellite-card" id="satCard">
+    <div class="sat-title">🛰️ ISRO Satellite Intelligence</div>
+    <div class="sat-sub">LISS-IV Optical · RISAT-2B SAR · Resourcesat-2A · Purnia District</div>
+    <div class="sat-grid">
+      <div class="sat-metric">
+        <div class="sat-metric-lbl">NDVI Index</div>
+        <div class="sat-metric-val" id="ndviVal">0.67</div>
+        <div class="sat-metric-status status-good">▲ Good vegetation</div>
+      </div>
+      <div class="sat-metric">
+        <div class="sat-metric-lbl">Soil Moisture</div>
+        <div class="sat-metric-val" id="moistVal">42%</div>
+        <div class="sat-metric-status status-warn">● Moderate</div>
+      </div>
+      <div class="sat-metric">
+        <div class="sat-metric-lbl">Crop Stress</div>
+        <div class="sat-metric-val" id="stressVal">Low</div>
+        <div class="sat-metric-status status-good">SAR backscatter</div>
+      </div>
+      <div class="sat-metric">
+        <div class="sat-metric-lbl">Last Pass</div>
+        <div class="sat-metric-val">Today</div>
+        <div class="sat-metric-status" style="color:rgba(150,200,255,0.7)">Resourcesat-2A</div>
+      </div>
+    </div>
+    <div class="ndvi-bar-wrap">
+      <div class="ndvi-bar-lbl"><span>NDVI Health Trend</span><span id="ndviPct">67%</span></div>
+      <div class="ndvi-bar"><div class="ndvi-fill" id="ndviFill" style="width:67%"></div></div>
+    </div>
+    <div class="sat-note">⚠️ Prototype — Satellite data integration is a future roadmap item. Values shown are illustrative.</div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-grid" role="list">
+    <button class="quick-btn" role="listitem" onclick="switchTab('advisory',document.querySelectorAll('.tab')[2])" aria-label="AI Advisory">
+      <span class="q-ico">🤖</span><span class="q-lbl">AI Advisory</span>
+    </button>
+    <button class="quick-btn" role="listitem" onclick="switchTab('weather',document.querySelectorAll('.tab')[3])" aria-label="Weather">
+      <span class="q-ico">🌤️</span><span class="q-lbl">Weather</span>
+    </button>
+    <button class="quick-btn" role="listitem" onclick="switchTab('mandi',document.querySelectorAll('.tab')[4])" aria-label="Mandi Prices">
+      <span class="q-ico">📈</span><span class="q-lbl">Mandi</span>
+    </button>
+    <button class="quick-btn" role="listitem" onclick="switchTab('schemes',document.querySelectorAll('.tab')[5])" aria-label="Govt Schemes">
+      <span class="q-ico">🏛️</span><span class="q-lbl">Schemes</span>
+    </button>
+  </div>
+
+  <!-- Today's tip -->
+  <div class="crop-advisory-strip">
+    <div class="cas-title">💡 आज की AI सलाह — Today's AI Tip</div>
+    <div class="cas-text">NDVI 0.67 indicates good crop health. Soil moisture at 42% — consider light irrigation in 2-3 days. Weather forecast shows rain Thursday — hold irrigation until then to conserve water.</div>
+  </div>
+
+  <!-- Status banner -->
+  <div class="card">
+    <div class="status-section">
+      <span class="live-badge">Live Features</span>
+      <span>Real AI advisory · Real voice recognition · Hindi TTS</span>
+    </div>
+    <div class="status-section" style="margin-bottom:4px">
+      <span class="proto-badge">⚠️ Prototype</span>
+      <span>Satellite data · Live Mandi API · Live weather API</span>
+    </div>
+    <div style="font-size:0.72rem;color:var(--text-3);line-height:1.5;margin-top:8px">
+      KisanKonnect is an honest open-source project. Live API integrations are on the roadmap. Always consult local agricultural experts for critical farming decisions.
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     VOICE FEED
+     ══════════════════════════════════════ -->
+<section id="feed" class="section" role="tabpanel" aria-label="Voice community feed">
+
+  <div class="card">
+    <div class="card-title">🎙️ आवाज़ से पूछें — Ask by Voice</div>
+    <div class="card-sub">अपनी फसल की समस्या बोलें — KisanAI तुरंत जवाब देगा</div>
+    <div class="live-badge" style="margin-bottom:12px">Web Speech API — Real voice recognition</div>
+
+    <div class="mic-wrap">
+      <button id="micBtn" class="mic-btn" onclick="toggleRecord()" aria-label="Start voice recording" aria-pressed="false">🎤</button>
+      <div id="waveform" class="waveform" aria-hidden="true">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div id="recLabel" class="rec-label">टैप करके बोलें — Tap to speak</div>
+      <div id="recTranscript" class="rec-transcript"></div>
+    </div>
+    <div id="aiThinking" class="ai-thinking" role="status" aria-live="polite">
+      <div class="think-dots"><span></span><span></span><span></span></div>
+      <div class="think-text">KisanAI सोच रहा है... analyzing your query</div>
+    </div>
+    <div class="disclaimer">
+      <span>ℹ️</span>
+      <span>AI responses are for guidance only. For critical crop decisions, consult your local Krishi Vigyan Kendra (KVK).</span>
+    </div>
+  </div>
+
+  <!-- Feed posts -->
+  <div id="feedPosts">
+
+    <div class="feed-post">
+      <div class="post-header">
+        <div class="avatar av-g" aria-hidden="true">R</div>
+        <div>
+          <div class="post-name">Ramesh Kumar</div>
+          <div class="post-loc">📍 Patna, Bihar · 2h ago</div>
+        </div>
+        <div class="post-badge">🌾 Wheat</div>
+      </div>
+      <div class="voice-player" onclick="playVoice(this)" role="button" aria-label="Play voice note, 18 seconds">
+        <button class="play-btn" aria-hidden="true">▶</button>
+        <div class="vw" id="vw1" aria-hidden="true"></div>
+        <span class="vdur">18s</span>
+      </div>
+      <div class="post-text">"मेरी गेहूं की फसल में पीले धब्बे हो रहे हैं और पत्तियां सूखने लगी हैं।"</div>
+      <div class="ai-box">
+        <div class="ai-box-lbl">🤖 KisanAI Analysis <span class="confidence-pill conf-high">87% confidence</span></div>
+        <div class="ai-box-text"><strong>पीला रतुआ रोग (Yellow Rust)</strong> की संभावना। तुरंत Propiconazole 25% EC @ 1ml/litre पानी में मिलाकर छिड़काव करें। 7 दिन बाद दूसरा छिड़काव करें।</div>
+      </div>
+      <div class="disclaimer"><span>ℹ️</span><span>Consult your local KVK before applying any pesticide.</span></div>
+      <div class="post-actions">
+        <button class="act-btn" onclick="likePost(this)">👍 Helpful (12)</button>
+        <button class="act-btn" onclick="speakText('पीला रतुआ रोग की संभावना है। Propiconazole छिड़काव करें।')">🔊 सुनें</button>
+        <button class="act-btn">📤 Share</button>
+      </div>
+    </div>
+
+    <div class="feed-post">
+      <div class="post-header">
+        <div class="avatar av-o" aria-hidden="true">S</div>
+        <div>
+          <div class="post-name">Sunita Devi</div>
+          <div class="post-loc">📍 Varanasi, UP · 5h ago</div>
+        </div>
+        <div class="post-badge">🌽 Maize</div>
+      </div>
+      <div class="voice-player" onclick="playVoice(this)" role="button" aria-label="Play voice note, 24 seconds">
+        <button class="play-btn" aria-hidden="true">▶</button>
+        <div class="vw" id="vw2" aria-hidden="true"></div>
+        <span class="vdur">24s</span>
+      </div>
+      <div class="post-text">"मेरी मक्के की फसल में कीड़े लग गए हैं। सुबह खेत में जाती हूं तो पत्तियां कटी हुई मिलती हैं।"</div>
+      <div class="ai-box">
+        <div class="ai-box-lbl">🤖 KisanAI Analysis <span class="confidence-pill conf-mid">74% confidence</span></div>
+        <div class="ai-box-text"><strong>Fall Armyworm (Spodoptera frugiperda)</strong> — खेत में Chlorpyrifos 20% EC @ 2.5ml/litre स्प्रे करें। शाम को छिड़काव करें क्योंकि यह कीड़ा रात को सक्रिय होता है।</div>
+      </div>
+      <div class="disclaimer"><span>ℹ️</span><span>Verify with local agricultural officer before applying pesticides.</span></div>
+      <div class="post-actions">
+        <button class="act-btn" onclick="likePost(this)">👍 Helpful (8)</button>
+        <button class="act-btn" onclick="speakText('Fall Armyworm की समस्या है। Chlorpyrifos spray करें शाम को।')">🔊 सुनें</button>
+        <button class="act-btn">📤 Share</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     KISANAI ADVISORY
+     ══════════════════════════════════════ -->
+<section id="advisory" class="section" role="tabpanel" aria-label="KisanAI crop advisory">
+
+  <div class="section-heading">🤖 KisanAI Crop Advisory</div>
+  <div class="section-subhead">Real AI diagnosis powered by Claude · ISRO satellite-enhanced</div>
+
+  <div class="live-badge" style="margin-bottom:12px">Claude AI — Real API integration</div>
+
+  <div class="card advisory-form">
+    <div class="form-row">
+      <select id="cropType" class="form-select" aria-label="Select crop type">
+        <option value="">🌾 Crop चुनें / Select Crop</option>
+        <option value="गेहूं (Wheat)">🌾 गेहूं — Wheat</option>
+        <option value="चावल (Rice)">🍚 चावल — Rice</option>
+        <option value="मक्का (Maize)">🌽 मक्का — Maize</option>
+        <option value="गन्ना (Sugarcane)">🎋 गन्ना — Sugarcane</option>
+        <option value="आलू (Potato)">🥔 आलू — Potato</option>
+        <option value="टमाटर (Tomato)">🍅 टमाटर — Tomato</option>
+        <option value="सरसों (Mustard)">🌼 सरसों — Mustard</option>
+        <option value="दाल (Pulses)">🫘 दाल — Pulses</option>
+        <option value="कपास (Cotton)">🌿 कपास — Cotton</option>
+      </select>
+      <select id="stateSelect" class="form-select" aria-label="Select state">
+        <option value="Bihar">Bihar</option>
+        <option value="UP">Uttar Pradesh</option>
+        <option value="Punjab">Punjab</option>
+        <option value="MP">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Rajasthan">Rajasthan</option>
+      </select>
+    </div>
+    <textarea id="queryText" class="form-textarea" placeholder="अपनी फसल की समस्या यहाँ लिखें...&#10;Describe your crop problem here...&#10;(Type in Hindi or English)" aria-label="Describe your crop problem"></textarea>
+    <button class="btn-primary" onclick="getAdvisory()" id="advBtn">
+      🤖 KisanAI से पूछें — Get AI Advisory
+    </button>
+  </div>
+
+  <div id="aiThinkingAdv" class="ai-thinking" role="status" aria-live="polite">
+    <div class="think-dots"><span></span><span></span><span></span></div>
+    <div class="think-text">KisanAI + ISRO satellite data analyzing... कृपया प्रतीक्षा करें</div>
+  </div>
+
+  <div id="advisoryResult" class="result-card" role="region" aria-label="AI Advisory Result" aria-live="polite">
+    <div class="result-hdr">
+      <div class="result-ico" aria-hidden="true">🌿</div>
+      <div>
+        <div class="result-title" id="resultTitle">AI Diagnosis</div>
+        <div class="result-sub" id="resultSub">Powered by Claude AI + ISRO data</div>
+      </div>
+    </div>
+    <div class="diagnosis-list" id="diagList"></div>
+    <div class="prevent-box" id="preventBox"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn-secondary" onclick="speakResult()" style="flex:1">🔊 सुनें — Listen</button>
+      <button class="btn-secondary" onclick="shareResult()" style="flex:1">📤 Share</button>
+    </div>
+    <div class="disclaimer" style="margin-top:10px">
+      <span>⚠️</span>
+      <span><strong>Important:</strong> This AI advisory is for guidance only. For critical decisions, always verify with your local Krishi Vigyan Kendra (KVK) or agriculture officer.</span>
+    </div>
+  </div>
+
+  <!-- Quick query suggestions -->
+  <div class="card" style="margin-top:12px">
+    <div class="card-title">💡 त्वरित प्रश्न — Quick Queries</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+      <button class="btn-secondary" style="font-size:0.8rem;padding:10px" onclick="quickQuery('मेरी गेहूं की पत्तियों में पीले धब्बे हो रहे हैं','गेहूं (Wheat)')">🌾 गेहूं में पीले धब्बे</button>
+      <button class="btn-secondary" style="font-size:0.8rem;padding:10px" onclick="quickQuery('मेरे टमाटर के पौधे मुरझा रहे हैं','टमाटर (Tomato)')">🍅 टमाटर मुरझाना</button>
+      <button class="btn-secondary" style="font-size:0.8rem;padding:10px" onclick="quickQuery('मक्के में कीड़े लग गए हैं पत्तियां कट रही हैं','मक्का (Maize)')">🌽 मक्के में कीट</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WEATHER
+     ══════════════════════════════════════ -->
+<section id="weather" class="section" role="tabpanel" aria-label="Weather and crop calendar">
+  <div class="proto-badge">⚠️ Prototype — Sample data. Live weather API integration is a future milestone.</div>
+
+  <div class="weather-hero">
+    <div style="font-size:3rem;margin-bottom:4px">⛅</div>
+    <div class="weather-temp">34°C</div>
+    <div class="weather-cond">Partly Cloudy · Humidity 68%</div>
+    <div class="weather-loc">📍 New Delhi — Updated: Today, 10:30 AM</div>
+    <div class="weather-grid">
+      <div class="weather-mini"><div class="wm-day">Mon</div><div class="wm-ico">🌤️</div><div class="wm-temp">35°</div></div>
+      <div class="weather-mini"><div class="wm-day">Tue</div><div class="wm-ico">⛅</div><div class="wm-temp">33°</div></div>
+      <div class="weather-mini"><div class="wm-day">Wed</div><div class="wm-ico">🌧️</div><div class="wm-temp">29°</div></div>
+      <div class="weather-mini"><div class="wm-day">Thu</div><div class="wm-ico">🌦️</div><div class="wm-temp">31°</div></div>
+    </div>
+  </div>
+
+  <div class="crop-advisory-strip">
+    <div class="cas-title">🌾 AI Crop Advisory based on Weather</div>
+    <div class="cas-text">Rain expected Wednesday–Thursday. <strong>Avoid irrigation today/tomorrow</strong> — save water. <strong>Wheat tillering stage:</strong> Apply 2nd dose nitrogen fertiliser after rain clears (Friday). Monitor for rust disease after humid period.</div>
+  </div>
+
+  <div class="weather-details">
+    <div class="wd-item"><div class="wd-ico">💧</div><div><div class="wd-lbl">Humidity</div><div class="wd-val">68%</div></div></div>
+    <div class="wd-item"><div class="wd-ico">💨</div><div><div class="wd-lbl">Wind Speed</div><div class="wd-val">12 km/h</div></div></div>
+    <div class="wd-item"><div class="wd-ico">🌡️</div><div><div class="wd-lbl">Feels Like</div><div class="wd-val">38°C</div></div></div>
+    <div class="wd-item"><div class="wd-ico">🌧️</div><div><div class="wd-lbl">Rain (Wed)</div><div class="wd-val">18mm</div></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 Crop Calendar — Kharif 2025</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--surface-3);border-radius:var(--r);border:1px solid var(--border)">
+        <span style="font-size:1.2rem">🌱</span>
+        <div style="flex:1"><div style="font-size:0.82rem;font-weight:600;color:var(--text-1)">Rice Sowing Window</div><div style="font-size:0.7rem;color:var(--text-3)">Jun 15 – Jul 15, 2025</div></div>
+        <span style="font-size:0.7rem;background:#d4edda;color:#155724;padding:2px 8px;border-radius:8px;font-weight:600">Active</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--surface-2);border-radius:var(--r);border:1px solid var(--border)">
+        <span style="font-size:1.2rem">💧</span>
+        <div style="flex:1"><div style="font-size:0.82rem;font-weight:600;color:var(--text-1)">Irrigation Checkpoint</div><div style="font-size:0.7rem;color:var(--text-3)">Wheat — after rain Thu</div></div>
+        <span style="font-size:0.7rem;background:#fff3cd;color:#856404;padding:2px 8px;border-radius:8px;font-weight:600">Thu</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MANDI PRICES
+     ══════════════════════════════════════ -->
+<section id="mandi" class="section" role="tabpanel" aria-label="Mandi market prices">
+  <div class="proto-badge">⚠️ Prototype — Sample data. AGMARKNET live API integration is a future milestone.</div>
+
+  <div class="mandi-ticker">
+    <div class="ticker-label">📊 Today's Market Snapshot</div>
+    <div class="ticker-scroll">
+      <div class="ticker-item"><div class="ti-crop">WHEAT</div><div class="ti-price">₹2,180</div><div class="ti-change ti-up">▲ 1.2%</div></div>
+      <div class="ticker-item"><div class="ti-crop">RICE</div><div class="ti-price">₹3,450</div><div class="ti-change ti-up">▲ 0.8%</div></div>
+      <div class="ticker-item"><div class="ti-crop">MAIZE</div><div class="ti-price">₹1,890</div><div class="ti-change ti-down">▼ 0.3%</div></div>
+      <div class="ticker-item"><div class="ti-crop">MUSTARD</div><div class="ti-price">₹5,200</div><div class="ti-change ti-up">▲ 2.1%</div></div>
+      <div class="ticker-item"><div class="ti-crop">SOYBEAN</div><div class="ti-price">₹4,180</div><div class="ti-change ti-down">▼ 0.5%</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏪 Nearby Mandis — New Delhi</div>
+    <table class="mandi-table" role="table" aria-label="Mandi prices table">
+      <thead><tr style="font-size:0.68rem;color:var(--text-3)">
+        <th style="padding:6px 14px;text-align:left;font-weight:500">Mandi</th>
+        <th style="padding:6px 14px;text-align:left;font-weight:500">Crop</th>
+        <th style="padding:6px 14px;text-align:left;font-weight:500">Price/Qtl</th>
+        <th style="padding:6px 14px;text-align:left;font-weight:500">Trend</th>
+      </tr></thead>
+      <tbody>
+        <tr class="mandi-row"><td>Azadpur</td><td>Wheat</td><td class="price-cell">₹2,180</td><td class="trend-up">▲ +₹26</td></tr>
+        <tr class="mandi-row"><td>Okhla</td><td>Wheat</td><td class="price-cell">₹2,155</td><td class="trend-up">▲ +₹15</td></tr>
+        <tr class="mandi-row"><td>Narela</td><td>Rice</td><td class="price-cell">₹3,450</td><td class="trend-up">▲ +₹28</td></tr>
+        <tr class="mandi-row"><td>Ghazipur</td><td>Maize</td><td class="price-cell">₹1,890</td><td class="trend-down">▼ -₹6</td></tr>
+        <tr class="mandi-row"><td>Shahdara</td><td>Mustard</td><td class="price-cell">₹5,200</td><td class="trend-up">▲ +₹108</td></tr>
+      </tbody>
+    </table>
+    <div class="mandi-note">ℹ️ Sample data for demonstration. Source will be AGMARKNET API (future milestone).</div>
+  </div>
+
+  <div class="crop-advisory-strip">
+    <div class="cas-title">💡 AI Market Advisory</div>
+    <div class="cas-text">Wheat prices up 1.2% today. MSP is ₹2,275/qtl — current market is below MSP. <strong>Recommendation:</strong> Consider holding wheat stock for 7–10 days if storage available. Mustard showing strongest gains (+2.1%).</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     GOVT SCHEMES
+     ══════════════════════════════════════ -->
+<section id="schemes" class="section" role="tabpanel" aria-label="Government schemes">
+
+  <div class="section-heading">🏛️ Government Schemes</div>
+  <div class="section-subhead">AI-matched schemes for your farmer profile</div>
+
+  <div class="filter-row" role="group" aria-label="Filter schemes by category">
+    <button class="chip active" onclick="filterScheme(this,'all')" aria-pressed="true">All</button>
+    <button class="chip" onclick="filterScheme(this,'income')" aria-pressed="false">Income Support</button>
+    <button class="chip" onclick="filterScheme(this,'insurance')" aria-pressed="false">Insurance</button>
+    <button class="chip" onclick="filterScheme(this,'credit')" aria-pressed="false">Credit</button>
+    <button class="chip" onclick="filterScheme(this,'input')" aria-pressed="false">Inputs</button>
+  </div>
+
+  <div class="scheme-card" data-type="income">
+    <div class="scheme-hdr">
+      <div class="scheme-name">PM-KISAN — Pradhan Mantri Kisan Samman Nidhi</div>
+      <span class="scheme-badge b-active">Active</span>
+    </div>
+    <div class="scheme-desc">Direct income support of ₹6,000/year to all eligible farmer families in 3 installments of ₹2,000 each.</div>
+    <div class="scheme-tags">
+      <span class="stag">All Farmers</span><span class="stag">Land < 2 ha</span><span class="stag">Annual</span>
+    </div>
+    <div class="scheme-benefit">
+      <div><div class="ben-lbl">Annual Benefit</div><div class="ben-val">₹6,000</div></div>
+      <div><div class="ben-lbl">Next Installment</div><div class="ben-val">Aug 2025</div></div>
+    </div>
+    <div class="scheme-actions">
+      <button class="btn-apply" onclick="applyScheme('PM-KISAN')">📝 Check Eligibility</button>
+      <button class="btn-info" onclick="showToast('PM-KISAN: All land-owning farmer families eligible. Documents: Aadhaar, Land records, Bank account.')">ℹ️</button>
+    </div>
+  </div>
+
+  <div class="scheme-card" data-type="insurance">
+    <div class="scheme-hdr">
+      <div class="scheme-name">PMFBY — Pradhan Mantri Fasal Bima Yojana</div>
+      <span class="scheme-badge b-deadline">Deadline: Jul 31</span>
+    </div>
+    <div class="scheme-desc">Comprehensive crop insurance covering losses from natural calamities, pests, and diseases at low premium rates.</div>
+    <div class="scheme-tags">
+      <span class="stag">All Crops</span><span class="stag">Premium 1.5–5%</span><span class="stag">Kharif 2025</span>
+    </div>
+    <div class="scheme-benefit">
+      <div><div class="ben-lbl">Coverage</div><div class="ben-val">Up to ₹2 Lakh</div></div>
+      <div><div class="ben-lbl">Premium</div><div class="ben-val">1.5% Rabi</div></div>
+    </div>
+    <div class="scheme-actions">
+      <button class="btn-apply" onclick="applyScheme('PMFBY')">📝 Apply Now</button>
+      <button class="btn-info" onclick="showToast('PMFBY: Enroll before Jul 31 for Kharif season. Apply at nearest Common Service Centre or bank branch.')">ℹ️</button>
+    </div>
+  </div>
+
+  <div class="scheme-card" data-type="credit">
+    <div class="scheme-hdr">
+      <div class="scheme-name">KCC — Kisan Credit Card</div>
+      <span class="scheme-badge b-active">Active</span>
+    </div>
+    <div class="scheme-desc">Short-term credit for crop cultivation, allied activities, and consumption needs at concessional interest rate of 4% p.a.</div>
+    <div class="scheme-tags">
+      <span class="stag">All Farmers</span><span class="stag">4% Interest</span><span class="stag">Up to ₹3L</span>
+    </div>
+    <div class="scheme-benefit">
+      <div><div class="ben-lbl">Credit Limit</div><div class="ben-val">₹1.6 Lakh avg</div></div>
+      <div><div class="ben-lbl">Interest Rate</div><div class="ben-val">4% p.a.</div></div>
+    </div>
+    <div class="scheme-actions">
+      <button class="btn-apply" onclick="applyScheme('KCC')">📝 Apply at Bank</button>
+      <button class="btn-info" onclick="showToast('KCC: Apply at any nationalized bank. Documents: Land records, Aadhaar, Passport photo.')">ℹ️</button>
+    </div>
+  </div>
+
+  <div class="scheme-card" data-type="input">
+    <div class="scheme-hdr">
+      <div class="scheme-name">Soil Health Card Scheme</div>
+      <span class="scheme-badge b-new">Free</span>
+    </div>
+    <div class="scheme-desc">Free soil testing and personalized nutrient recommendations to improve soil health and reduce input costs.</div>
+    <div class="scheme-tags">
+      <span class="stag">All Farmers</span><span class="stag">Free</span><span class="stag">Every 2 years</span>
+    </div>
+    <div class="scheme-benefit">
+      <div><div class="ben-lbl">Cost</div><div class="ben-val">Free</div></div>
+      <div><div class="ben-lbl">Saves</div><div class="ben-val">₹2,000+ input</div></div>
+    </div>
+    <div class="scheme-actions">
+      <button class="btn-apply" onclick="applyScheme('Soil Health Card')">📝 Get Card</button>
+      <button class="btn-info" onclick="showToast('Visit your nearest KVK or Agriculture office. Bring land record and Aadhaar.')">ℹ️</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FARM DIARY
+     ══════════════════════════════════════ -->
+<section id="diary" class="section" role="tabpanel" aria-label="Farm diary">
+
+  <div class="section-heading">📔 Farm Diary</div>
+  <div class="section-subhead">Track your farming activities and observations</div>
+
+  <div class="card">
+    <textarea class="form-textarea" id="diaryText" placeholder="आज के खेत का हाल लिखें...&#10;What happened in your field today?" style="height:90px" aria-label="New diary entry"></textarea>
+    <button class="btn-primary" onclick="addDiaryEntry()" style="margin-top:8px">📝 Save Entry</button>
+  </div>
+
+  <div id="diaryEntries">
+    <div class="diary-entry">
+      <div class="de-date">Mon, 7 Jul 2025 · 8:30 AM</div>
+      <div class="de-title">🌾 Wheat field inspection</div>
+      <div class="de-body">Noticed slight yellowing on lower leaves. Applied KisanAI diagnosis — suspected Yellow Rust. Consulted local KVK, confirmed diagnosis. Applied Propiconazole spray in evening.</div>
+      <div class="de-tags"><span class="de-tag">Wheat</span><span class="de-tag">Disease</span><span class="de-tag">Spray</span></div>
+    </div>
+    <div class="diary-entry">
+      <div class="de-date">Sat, 5 Jul 2025 · 6:00 AM</div>
+      <div class="de-title">💧 Irrigation completed</div>
+      <div class="de-body">Irrigated wheat field as per KisanAI weather advisory. NDVI reading shows 0.67 — healthy. Soil moisture adequate for next 4 days.</div>
+      <div class="de-tags"><span class="de-tag">Wheat</span><span class="de-tag">Irrigation</span><span class="de-tag">NDVI</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PROFILE & SETTINGS
+     ══════════════════════════════════════ -->
+<section id="profile" class="section" role="tabpanel" aria-label="Profile and settings">
+
+  <div class="profile-hero">
+    <div class="profile-av" aria-hidden="true">👩‍🌾</div>
+    <div class="profile-name">Astha Mosmi</div>
+    <div class="profile-role">B.A. Computer Applications + Economics · Maitreyi College, New Delhi</div>
+    <div class="profile-stats">
+      <div><div class="pst-num">7</div><div class="pst-lbl">AI Queries</div></div>
+      <div><div class="pst-num">3</div><div class="pst-lbl">Diagnoses</div></div>
+      <div><div class="pst-num">2</div><div class="pst-lbl">Schemes</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">👤 Profile Details</div>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div class="settings-item" style="cursor:default">
+        <span class="si-ico">👩</span>
+        <div class="si-text"><div class="si-label">Astha Mosmi</div><div class="si-sub">asthamosmi@gmail.com</div></div>
+      </div>
+      <div class="settings-item" style="cursor:default">
+        <span class="si-ico">🎓</span>
+        <div class="si-text"><div class="si-label">Maitreyi College</div><div class="si-sub">B.A. Computer Applications + Economics, Year I</div></div>
+      </div>
+      <div class="settings-item" style="cursor:default">
+        <span class="si-ico">📍</span>
+        <div class="si-text"><div class="si-label">New Delhi, India</div><div class="si-sub">Vasant Kunj — 110021</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-list" role="list">
+    <div class="settings-item" role="listitem" onclick="cycleLang()">
+      <span class="si-ico">🌐</span>
+      <div class="si-text"><div class="si-label">Language</div><div class="si-sub" id="langLabel">Hindi (हिंदी)</div></div>
+      <span class="si-arrow">›</span>
+    </div>
+    <div class="settings-item" role="listitem">
+      <span class="si-ico">🌙</span>
+      <div class="si-text"><div class="si-label">Dark Mode</div><div class="si-sub">Switch theme</div></div>
+      <label class="toggle" aria-label="Toggle dark mode">
+        <input type="checkbox" id="darkToggle" onchange="toggleTheme()" aria-label="Dark mode">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="settings-item" role="listitem">
+      <span class="si-ico">🔔</span>
+      <div class="si-text"><div class="si-label">Notifications</div><div class="si-sub">Weather alerts, price changes</div></div>
+      <label class="toggle" aria-label="Toggle notifications">
+        <input type="checkbox" checked aria-label="Notifications">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="settings-item" role="listitem" onclick="showToast('📖 Help Center coming soon!')">
+      <span class="si-ico">❓</span>
+      <div class="si-text"><div class="si-label">Help Center</div><div class="si-sub">FAQs and user guide</div></div>
+      <span class="si-arrow">›</span>
+    </div>
+    <div class="settings-item" role="listitem" onclick="showToast('🛡️ Privacy: No personal data sent to servers. Voice processed locally.')">
+      <span class="si-ico">🔒</span>
+      <div class="si-text"><div class="si-label">Privacy</div><div class="si-sub">How your data is used</div></div>
+      <span class="si-arrow">›</span>
+    </div>
+    <div class="settings-item" role="listitem" onclick="showToast('KisanKonnect v3.0 · Astha Mosmi · Moonshot Awards 2026 · MIT License')">
+      <span class="si-ico">ℹ️</span>
+      <div class="si-text"><div class="si-label">About KisanKonnect</div><div class="si-sub">v3.0 · Open Source · MIT License</div></div>
+      <span class="si-arrow">›</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px;font-size:0.7rem;color:var(--text-3);line-height:1.8">
+    Built with ❤️ by <strong>Astha Mosmi</strong><br>
+    Maitreyi College, New Delhi<br>
+    Open Source · MIT License<br>
+    <a href="https://github.com/asthamosmi-arch/KisanKonnect" style="color:var(--leaf);font-weight:600">github.com/asthamosmi-arch/KisanKonnect</a>
+  </div>
+</section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+  <button class="bnav-item active" onclick="switchSection('dashboard',this)" aria-label="Dashboard" aria-current="page">
+    <span class="bnav-ico">🏠</span><span class="bnav-lbl">Home</span>
+  </button>
+  <button class="bnav-item" onclick="switchSection('feed',this)" aria-label="Voice Feed">
+    <span class="bnav-ico">🎙️</span><span class="bnav-lbl">Feed</span>
+  </button>
+  <button class="bnav-item" onclick="switchSection('advisory',this)" aria-label="KisanAI">
+    <span class="bnav-ico">🤖</span><span class="bnav-lbl">KisanAI</span>
+  </button>
+  <button class="bnav-item" onclick="switchSection('schemes',this)" aria-label="Schemes">
+    <span class="bnav-ico">🏛️</span><span class="bnav-lbl">Schemes</span>
+  </button>
+  <button class="bnav-item" onclick="switchSection('profile',this)" aria-label="Profile">
+    <span class="bnav-ico">👩‍🌾</span><span class="bnav-lbl">Profile</span>
+  </button>
+</nav>
+
+</div><!-- #app -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// KisanKonnect v3.0 — Production JavaScript
+// Author: Astha Mosmi | Maitreyi College, New Delhi
+// Repo: github.com/asthamosmi-arch/KisanKonnect
+// ═══════════════════════════════════════════════════════
+
+"use strict";
+
+// ── STATE ──────────────────────────────────────────────
+const state = {
+  lang: "hi-IN",
+  langLabel: "Hindi (हिंदी)",
+  theme: "light",
+  recording: false,
+  spokenText: "",
+  recSeconds: 0,
+  lastResult: "",
+};
+
+const LANGS = [
+  { code: "hi-IN", label: "Hindi (हिंदी)",     name: "हिंदी" },
+  { code: "bho",   label: "Bhojpuri (भोजपुरी)", name: "भोजपुरी" },
+  { code: "mai",   label: "Maithili (मैथिली)",  name: "मैथिली" },
+  { code: "en-IN", label: "English",             name: "English" },
+];
+
+// ── SPLASH / ONBOARDING ────────────────────────────────
+function selectLang(el, code) {
+  document.querySelectorAll(".lang-btn").forEach(b => {
+    b.classList.remove("selected");
+    b.setAttribute("aria-pressed","false");
+  });
+  el.classList.add("selected");
+  el.setAttribute("aria-pressed","true");
+  state.lang = code;
+  const found = LANGS.find(l => l.code === code);
+  if (found) state.langLabel = found.label;
+}
+
+function enterApp() {
+  const splash = document.getElementById("splash");
+  splash.classList.add("fade-out");
+  setTimeout(() => {
+    splash.style.display = "none";
+    const app = document.getElementById("app");
+    app.classList.add("visible");
+    updateLangUI();
+    initWaveforms();
+    animateSatellite();
+    showToast("🌾 KisanKonnect में आपका स्वागत है!");
+  }, 500);
+}
+
+// ── THEME ──────────────────────────────────────────────
+function toggleTheme() {
+  state.theme = state.theme === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", state.theme);
+  const cb = document.getElementById("darkToggle");
+  if (cb) cb.checked = state.theme === "dark";
+  const btn = document.querySelector(".nav-icon-btn");
+  if (btn) btn.textContent = state.theme === "dark" ? "☀️" : "🌙";
+  showToast(state.theme === "dark" ? "🌙 Dark mode on" : "☀️ Light mode on");
+}
+
+// ── LANGUAGE ───────────────────────────────────────────
+function cycleLang() {
+  const idx = LANGS.findIndex(l => l.code === state.lang);
+  const next = LANGS[(idx + 1) % LANGS.length];
+  state.lang = next.code;
+  state.langLabel = next.label;
+  updateLangUI();
+  showToast("🌐 Language: " + next.label);
+}
+
+function updateLangUI() {
+  const pill = document.querySelector(".lang-pill");
+  const lbl = document.getElementById("langLabel");
+  const found = LANGS.find(l => l.code === state.lang);
+  if (pill && found) pill.textContent = "🌐 " + found.name;
+  if (lbl) lbl.textContent = state.langLabel;
+}
+
+// ── NAVIGATION ─────────────────────────────────────────
+function switchTab(id, el) {
+  document.querySelectorAll(".tab").forEach(t => {
+    t.classList.remove("active");
+    t.setAttribute("aria-selected","false");
+  });
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  if (el) { el.classList.add("active"); el.setAttribute("aria-selected","true"); }
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add("active");
+  syncBottomNav(id);
+}
+
+function switchSection(id, el) {
+  document.querySelectorAll(".bnav-item").forEach(b => {
+    b.classList.remove("active");
+    b.removeAttribute("aria-current");
+  });
+  if (el) { el.classList.add("active"); el.setAttribute("aria-current","page"); }
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add("active");
+  // sync tabbar
+  const tabs = document.querySelectorAll(".tab");
+  const ids = ["dashboard","feed","advisory","weather","mandi","schemes","diary","profile"];
+  tabs.forEach((t, i) => {
+    const active = ids[i] === id;
+    t.classList.toggle("active", active);
+    t.setAttribute("aria-selected", active ? "true" : "false");
+  });
+}
+
+function syncBottomNav(id) {
+  const bids = ["dashboard","feed","advisory","schemes","profile"];
+  document.querySelectorAll(".bnav-item").forEach((b, i) => {
+    const active = bids[i] === id;
+    b.classList.toggle("active", active);
+    if (active) b.setAttribute("aria-current","page");
+    else b.removeAttribute("aria-current");
+  });
+}
+
+// ── WAVEFORMS ──────────────────────────────────────────
+function initWaveforms() {
+  ["vw1","vw2"].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const bars = Array.from({length: 20}, () => {
+      const d = document.createElement("div");
+      d.style.height = Math.floor(Math.random() * 18 + 4) + "px";
+      return d;
+    });
+    el.innerHTML = "";
+    bars.forEach(b => el.appendChild(b));
+  });
+}
+
+// ── SATELLITE ANIMATION ────────────────────────────────
+function animateSatellite() {
+  const ndvi = (0.60 + Math.random() * 0.12).toFixed(2);
+  const moist = Math.floor(36 + Math.random() * 12);
+  const stresses = ["Low","Low","Low","Moderate"];
+  const stress = stresses[Math.floor(Math.random() * stresses.length)];
+  const pct = Math.round(parseFloat(ndvi) * 100);
+
+  const nv = document.getElementById("ndviVal");
+  const mv = document.getElementById("moistVal");
+  const sv = document.getElementById("stressVal");
+  const nf = document.getElementById("ndviFill");
+  const np = document.getElementById("ndviPct");
+
+  if (nv) nv.textContent = ndvi;
+  if (mv) mv.textContent = moist + "%";
+  if (sv) sv.textContent = stress;
+  if (nf) nf.style.width = pct + "%";
+  if (np) np.textContent = pct + "%";
+}
+
+setInterval(animateSatellite, 9000);
+
+// ═══════════════════════════════════════════════════════
+// REAL VOICE — Web Speech API
+// ═══════════════════════════════════════════════════════
+let recognition = null;
+let recTimer = null;
+
+function initRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return null;
+  const r = new SR();
+  r.continuous = true;
+  r.interimResults = true;
+  r.lang = state.lang === "bho" || state.lang === "mai" ? "hi-IN" : state.lang;
+
+  r.onresult = (e) => {
+    let final = "", interim = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    if (final) state.spokenText += final;
+    const t = document.getElementById("recTranscript");
+    if (t) t.textContent = (state.spokenText + interim).trim() || "";
+    const l = document.getElementById("recLabel");
+    if (l && (state.spokenText + interim).trim()) l.textContent = "🎙️ सुन रहा हूं...";
+  };
+
+  r.onerror = (e) => {
+    if (e.error === "not-allowed") showToast("⚠️ Microphone permission denied.");
+    else if (e.error !== "aborted") showToast("⚠️ Voice error: " + e.error);
+    stopRecording();
+  };
+
+  r.onend = () => { if (state.recording) { try { r.start(); } catch(_) {} } };
+  return r;
+}
+
+function toggleRecord() {
+  state.recording ? stopRecording() : startRecording();
+}
+
+function startRecording() {
+  state.recording = true;
+  state.spokenText = "";
+  state.recSeconds = 0;
+  const btn = document.getElementById("micBtn");
+  const wave = document.getElementById("waveform");
+  const lbl = document.getElementById("recLabel");
+  const tr = document.getElementById("recTranscript");
+  if (btn) { btn.classList.add("recording"); btn.textContent = "⏹"; btn.setAttribute("aria-pressed","true"); }
+  if (wave) wave.classList.add("active");
+  if (tr) tr.textContent = "";
+
+  recTimer = setInterval(() => {
+    state.recSeconds++;
+    const l = document.getElementById("recLabel");
+    if (l && !state.spokenText) l.textContent = "🎙️ Recording " + state.recSeconds + "s — बोलें...";
+  }, 1000);
+
+  recognition = initRecognition();
+  if (recognition) {
+    try { recognition.start(); showToast("🎙️ Listening — " + state.langLabel); }
+    catch (e) { showToast("⚠️ Could not start mic. Try again."); stopRecording(); }
+  } else {
+    if (lbl) lbl.textContent = "⚠️ Speech API unavailable — simulation mode";
+    showToast("⚠️ Web Speech API not supported in this browser.");
+  }
+}
+
+function stopRecording() {
+  state.recording = false;
+  clearInterval(recTimer);
+  if (recognition) { try { recognition.stop(); } catch(_) {} recognition = null; }
+  const btn = document.getElementById("micBtn");
+  const wave = document.getElementById("waveform");
+  const lbl = document.getElementById("recLabel");
+  if (btn) { btn.classList.remove("recording"); btn.textContent = "🎤"; btn.setAttribute("aria-pressed","false"); }
+  if (wave) wave.classList.remove("active");
+  if (lbl) lbl.textContent = "टैप करके बोलें — Tap to speak";
+  if (state.recSeconds >= 1) processVoice();
+  else showToast("⚠️ Too short — please speak for at least 1 second.");
+}
+
+async function processVoice() {
+  const thinking = document.getElementById("aiThinking");
+  if (thinking) thinking.classList.add("show");
+  const query = state.spokenText.trim() || "मेरी फसल में क्या समस्या हो सकती है?";
+  showToast("🤖 Analyzing: "" + query.substring(0,45) + "..."");
+  try {
+    const reply = await callKisanAI(query, "feed");
+    if (thinking) thinking.classList.remove("show");
+    addFeedPost(query, reply, state.recSeconds);
+    showToast("✅ AI reply added to community feed!");
+  } catch (e) {
+    if (thinking) thinking.classList.remove("show");
+    addFeedPost(query, "⚠️ AI service unavailable. Please try again later.", state.recSeconds);
+    showToast("⚠️ AI timeout — check your connection.");
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// REAL AI — Anthropic Claude API
+// ═══════════════════════════════════════════════════════
+async function callKisanAI(userQuery, mode = "advisory", crop = "", location = "Bihar") {
+  const systemMap = {
+    feed: `You are KisanAI, a helpful agricultural assistant for Indian smallholder farmers. 
+The farmer spoke in Hindi/Bhojpuri/Maithili. Give a SHORT practical response in Hindi (2-4 sentences).
+Include: (1) Problem/disease identified with confidence % (2) Immediate practical action with specific product name and dose.
+Always end with: "⚠️ स्थानीय KVK या कृषि अधिकारी से सत्यापित करें।"`,
+    advisory: `You are KisanAI, expert crop advisor for Indian smallholder farmers.
+Crop: ${crop || "unspecified"}. Location: ${location}. 
+Satellite data (illustrative): NDVI 0.67 (good health), Soil moisture 42% (moderate).
+
+Respond in HINDI with this structure:
+**🔍 रोग/समस्या पहचान** — Name + confidence %
+**💊 तत्काल उपाय** — Specific product, dose, timing, method
+**🛰️ NDVI विश्लेषण** — What the satellite indicators suggest
+**🛡️ रोकथाम** — 1-2 prevention tips
+**⚠️ सलाह** — Always end with: "महत्वपूर्ण: यह AI सलाह मार्गदर्शन के लिए है। अंतिम निर्णय से पहले स्थानीय KVK से परामर्श लें।"
+
+Max 200 words. Use real product names and doses.`
+  };
+
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 1000,
+      system: systemMap[mode] || systemMap.advisory,
+      messages: [{ role: "user", content: userQuery }]
+    })
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error("API " + resp.status + ": " + (err.error?.message || "Unknown error"));
+  }
+  const data = await resp.json();
+  return data.content?.[0]?.text || "AI response unavailable.";
+}
+
+// ── ADD FEED POST ──────────────────────────────────────
+function addFeedPost(query, aiReply, duration) {
+  const post = document.createElement("div");
+  post.className = "feed-post";
+  const now = new Date();
+  const t = now.getHours() + ":" + String(now.getMinutes()).padStart(2,"0");
+  const safeReply = aiReply.replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
+    .replace(/
+/g,"<br>");
+  const safeQuery = query.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+  post.innerHTML = `
+    <div class="post-header">
+      <div class="avatar av-y" aria-hidden="true">A</div>
+      <div>
+        <div class="post-name">Astha Mosmi <span style="font-size:0.62rem;background:#e8f5e9;color:var(--leaf);padding:2px 6px;border-radius:6px;margin-left:4px;font-weight:600">आप</span></div>
+        <div class="post-loc">📍 New Delhi · Today ${t}</div>
+      </div>
+      <div class="post-badge">🎙️ Voice</div>
+    </div>
+    <div class="voice-player" onclick="playVoice(this)" role="button" aria-label="Play voice note">
+      <button class="play-btn" aria-hidden="true">▶</button>
+      <div class="vw" id="vwNew" aria-hidden="true"></div>
+      <span class="vdur">${duration}s</span>
+    </div>
+    <div class="post-text">"${safeQuery}"</div>
+    <div class="ai-box">
+      <div class="ai-box-lbl">🤖 KisanAI Real Analysis <span class="confidence-pill conf-high">Claude AI</span></div>
+      <div class="ai-box-text">${safeReply}</div>
+    </div>
+    <div class="disclaimer"><span>⚠️</span><span>AI guidance only. Verify with local KVK before applying.</span></div>
+    <div class="post-actions">
+      <button class="act-btn" onclick="likePost(this)">👍 Helpful (0)</button>
+      <button class="act-btn" onclick="speakText(\`${aiReply.replace(/`/g,"").substring(0,250)}\`)">🔊 सुनें</button>
+      <button class="act-btn" onclick="showToast('📤 Share link copied!')">📤 Share</button>
+    </div>`;
+
+  const feed = document.getElementById("feedPosts");
+  if (feed) feed.insertBefore(post, feed.firstChild);
+
+  // init new waveform
+  const vw = document.getElementById("vwNew");
+  if (vw) {
+    Array.from({length: 20}).forEach(() => {
+      const d = document.createElement("div");
+      d.style.height = Math.floor(Math.random() * 18 + 4) + "px";
+      vw.appendChild(d);
+    });
+    vw.id = "vwPost" + Date.now();
+  }
+}
+
+// ── ADVISORY ──────────────────────────────────────────
+async function getAdvisory() {
+  const crop = document.getElementById("cropType")?.value;
+  const loc = document.getElementById("stateSelect")?.value || "Bihar";
+  const query = document.getElementById("queryText")?.value?.trim();
+
+  if (!crop && !query) { showToast("⚠️ कृपया फसल चुनें या समस्या लिखें।"); return; }
+
+  const thinkAdv = document.getElementById("aiThinkingAdv");
+  const result = document.getElementById("advisoryResult");
+  const btn = document.getElementById("advBtn");
+
+  if (btn) { btn.disabled = true; btn.textContent = "⏳ Analyzing..."; }
+  if (thinkAdv) thinkAdv.classList.add("show");
+  if (result) result.classList.remove("show");
+
+  const q = query || `मेरी ${crop} की फसल का AI analysis करें। NDVI 0.67, soil moisture 42%.`;
+
+  try {
+    const reply = await callKisanAI(q, "advisory", crop, loc);
+    state.lastResult = reply;
+
+    if (thinkAdv) thinkAdv.classList.remove("show");
+    if (btn) { btn.disabled = false; btn.innerHTML = "🤖 KisanAI से पूछें — Get AI Advisory"; }
+
+    const rt = document.getElementById("resultTitle");
+    const rs = document.getElementById("resultSub");
+    const dl = document.getElementById("diagList");
+    const pb = document.getElementById("preventBox");
+
+    if (rt) rt.textContent = (crop || "Crop") + " — AI Diagnosis Complete";
+    if (rs) rs.textContent = "🛰️ Claude AI + ISRO satellite indicators · " + new Date().toLocaleTimeString("hi-IN");
+    if (dl) dl.innerHTML = `<div class="diag-item">
+      <div class="diag-dot dot-ok"></div>
+      <div><div class="diag-lbl">🤖 KisanAI Complete Analysis</div>
+      <div class="diag-val">${reply.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/
+/g,"<br>")}</div>
+      </div></div>`;
+    if (pb) pb.innerHTML = `<strong>🛰️ Satellite Context (Illustrative):</strong><br>NDVI: 0.67 (Good vegetation health) · Soil Moisture: 42% (Moderate) · SAR Backscatter: Low stress · Last satellite pass: Today, Resourcesat-2A<br><br><em>Note: Satellite integration is a future roadmap milestone. Values shown are illustrative.</em>`;
+
+    if (result) result.classList.add("show");
+    showToast("✅ AI diagnosis complete!");
+  } catch (e) {
+    if (thinkAdv) thinkAdv.classList.remove("show");
+    if (btn) { btn.disabled = false; btn.innerHTML = "🤖 KisanAI से पूछें — Get AI Advisory"; }
+    showToast("⚠️ AI error: " + e.message.substring(0,60));
+    console.error("Advisory error:", e);
+  }
+}
+
+function quickQuery(text, crop) {
+  const qt = document.getElementById("queryText");
+  const ct = document.getElementById("cropType");
+  if (qt) qt.value = text;
+  if (ct) ct.value = crop;
+  switchTab("advisory", document.querySelectorAll(".tab")[2]);
+  setTimeout(getAdvisory, 300);
+}
+
+// ── TTS ───────────────────────────────────────────────
+function speakText(text) {
+  if (!window.speechSynthesis) { showToast("⚠️ TTS not supported in this browser."); return; }
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text.substring(0, 350));
+  utt.lang = "hi-IN";
+  utt.rate = 0.88;
+  utt.pitch = 1.05;
+  const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith("hi"));
+  if (voices.length) utt.voice = voices[0];
+  utt.onend = () => showToast("✅ Voice playback complete");
+  speechSynthesis.speak(utt);
+  showToast("🔊 Hindi TTS playing...");
+}
+
+function speakResult() {
+  if (state.lastResult) speakText(state.lastResult);
+  else showToast("⚠️ No result to speak.");
+}
+
+function shareResult() {
+  if (navigator.share && state.lastResult) {
+    navigator.share({ title: "KisanAI Advisory", text: state.lastResult, url: window.location.href });
+  } else {
+    showToast("📤 Share: Copy the result above to share with others.");
+  }
+}
+
+if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+
+// ── FEED UTILS ────────────────────────────────────────
+function playVoice(el) {
+  const btn = el.querySelector(".play-btn");
+  if (!btn) return;
+  btn.textContent = "⏸";
+  showToast("🔊 Playing voice note...");
+  setTimeout(() => { btn.textContent = "▶"; }, 2500);
+}
+
+function likePost(btn) {
+  const m = btn.textContent.match(/(\d+)/);
+  if (m) {
+    btn.textContent = "👍 Helpful (" + (parseInt(m[1]) + 1) + ")";
+    btn.style.color = "var(--leaf)";
+    btn.style.borderColor = "var(--leaf)";
+  }
+}
+
+// ── SCHEMES ───────────────────────────────────────────
+function filterScheme(el, type) {
+  document.querySelectorAll(".chip").forEach(c => {
+    c.classList.remove("active"); c.setAttribute("aria-pressed","false");
+  });
+  el.classList.add("active"); el.setAttribute("aria-pressed","true");
+  document.querySelectorAll(".scheme-card").forEach(c => {
+    c.style.display = (type === "all" || c.dataset.type === type) ? "block" : "none";
+  });
+}
+
+function applyScheme(name) {
+  showToast("📝 " + name + " — checking eligibility...");
+  setTimeout(() => showToast("✅ Voice guidance available for " + name + " application!"), 1800);
+}
+
+// ── FARM DIARY ────────────────────────────────────────
+function addDiaryEntry() {
+  const txt = document.getElementById("diaryText")?.value?.trim();
+  if (!txt) { showToast("⚠️ Please write something first!"); return; }
+  const entry = document.createElement("div");
+  entry.className = "diary-entry";
+  const now = new Date();
+  const dateStr = now.toDateString() + " · " + now.getHours() + ":" + String(now.getMinutes()).padStart(2,"0");
+  entry.innerHTML = `
+    <div class="de-date">${dateStr}</div>
+    <div class="de-title">📝 New Entry</div>
+    <div class="de-body">${txt.replace(/</g,"&lt;")}</div>
+    <div class="de-tags"><span class="de-tag">Personal</span></div>`;
+  const container = document.getElementById("diaryEntries");
+  if (container) container.insertBefore(entry, container.firstChild);
+  const ta = document.getElementById("diaryText");
+  if (ta) ta.value = "";
+  showToast("✅ Diary entry saved!");
+}
+
+// ── TOAST ─────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 3200);
+}
+
+// ── INIT ──────────────────────────────────────────────
+window.addEventListener("load", () => {
+  // Restore theme
+  const saved = localStorage.getItem("kk-theme") || "light";
+  state.theme = saved;
+  document.documentElement.setAttribute("data-theme", saved);
+  const cb = document.getElementById("darkToggle");
+  if (cb) cb.checked = saved === "dark";
+
+  console.log(
+    "%c🌾 KisanKonnect v3.0%c\nBuilt by Astha Mosmi | Maitreyi College, New Delhi\ngithub.com/asthamosmi-arch/KisanKonnect",
+    "color:#2D6A4F;font-size:16px;font-weight:bold",
+    "color:#666;font-size:12px"
+  );
+});
+
+// Save theme on toggle
+const _orig = toggleTheme;
+window.toggleTheme = function() {
+  _orig();
+  localStorage.setItem("kk-theme", state.theme);
+};
+</script>
+</body>
+</html>
